@@ -8,21 +8,18 @@ const app = express();
 
 // --- BULLETPROOF CORS CONFIGURATION ---
 app.use(cors({
-  origin: 'https://idrive-portal.onrender.com', // Explicitly trust your exact frontend URL
+  origin: 'https://idrive-portal.onrender.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Force Express to answer the "Preflight" test requests
 app.options('*', cors()); 
-
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB!"))
   .catch(err => console.log("DB Connection Error: ", err));
 
-// Route: Check Availability
 app.get('/api/availability', async (req, res) => {
   try {
     const bookings = await Booking.find({}, 'itinerary');
@@ -33,7 +30,6 @@ app.get('/api/availability', async (req, res) => {
   }
 });
 
-// Route: Save New Booking
 app.post('/api/bookings', async (req, res) => {
   try {
     console.log("New Booking Received:", req.body);
