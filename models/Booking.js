@@ -5,13 +5,16 @@ const bookingSchema = new mongoose.Schema({
   email: { type: String, required: true },
   phone: { type: String, required: true },
   courseType: { type: Number, required: true }, 
-  // NEW: Every lesson is tracked individually
   itinerary: [{
-    date: String,      // e.g., "2026-05-03"
-    timeSlot: String   // e.g., "09:00 AM"
+    date: String,      
+    timeSlot: String   
   }],
   startDate: String,
   endDate: String,
+  // --- NEW ADMIN FIELDS ---
+  status: { type: String, default: "Unassigned" }, 
+  trainer: { type: String, default: "Pending" },
+  // ------------------------
   createdAt: { type: Date, default: Date.now }
 });
 
